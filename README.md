@@ -33,9 +33,9 @@ All arithmetic include in the file "Arithmetic". Including FFC, TEAVAR, TECommon
 File TestHTTP is about a Django frame to achieve front-end show
 
 其中，
-availability.py用于计算网络链路的可用性
-KshortestPaths.py用于找到前k条最短路径
-parsers.py用于解析和读取文件，生成算法所需的格式
-SimulationData.py用于生成测试数据，用于之后的测试
-TestArithmetic.py用于测试每种算法，并将结果输出到data中的文件中
-utilization.py用于计算链路的可用性，并绘制成柱状图
+availability.py用于计算网络链路的可用性。
+KshortestPaths.py用于找到前k条最短路径。
+parsers.py用于解析和读取文件，生成算法所需的格式。
+SimulationData.py用于生成测试数据，用于之后的测试。
+TestArithmetic.py用于测试每种算法，并将结果输出到data中的文件中。
+utilization.py用于计算链路的可用性，并绘制成柱状图。
