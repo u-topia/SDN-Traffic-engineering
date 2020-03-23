@@ -31,6 +31,7 @@ def TestFFC():
     # 找到前k条最短路径
     k = int(input('请输入最短路数量：'))
     all_k_shortest_path = KshortestPaths.ksp(dict, nodes, flows, k)
+    # all_k_shortest_path = KshortestPaths.solve_path_random(dict, nodes, flows, k)
     # for i in all_k_shortest_path:
     #     print(i)
     Tf = KshortestPaths.solve_path(all_k_shortest_path, flows, links, k)
@@ -50,6 +51,7 @@ def TestTECommon():
     # 找到前k条最短路径
     k = int(input('请输入最短路数量：'))
     all_k_shortest_path = KshortestPaths.ksp(dict, nodes, flows, k)
+    # all_k_shortest_path = KshortestPaths.solve_path_random(dict, nodes, flows, k)
     # for i in all_k_shortest_path:
     #     print(i)
     Tf = KshortestPaths.solve_path(all_k_shortest_path, flows, links, k)
@@ -75,6 +77,10 @@ def TestTeaVar():
     TEAVAR.TeaVar(links, capacity, demand, flows, Tf, k)
     # print(len(flows))
 
-# TestFFC()
+def TestTECommonDy():
+
+    return
+
+TestFFC()
 # TestTECommon()
 # TestTeaVar()

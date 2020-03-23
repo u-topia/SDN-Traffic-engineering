@@ -1,6 +1,6 @@
 from graduation_project import parsers
 import numpy as np
-
+import random
 
 Inf = float('inf')
 
@@ -75,6 +75,30 @@ def dijkstra(graph, src, dst, n): #graph表示邻接矩阵，n表示节点数
     print(dist)
     return dist[dst]
 
+# 路径处理，随机找出k条路径作为tunnel
+def solve_path_random(dict, nodes, flows, k):
+    a = len(nodes)
+    all_k_shortest_path = []
+    for i in range(a):
+        for j in range(a):
+            random.seed(10)
+            if i != j:
+                path_choice = []
+                paths = findAllPath(dict, nodes[i], nodes[j])
+                x = 0
+                number = []
+                while x < k:
+                    num = random.randint(0, len(paths) - 1)
+                    if num not in number:
+                        number.append(num)
+                        x += 1
+                        path_choice.append(paths[num])
+                all_k_shortest_path.append(path_choice)
+                # print(all_k_shortest_path[index1])
+    # print(all_k_shortest_path)
+    return all_k_shortest_path
+
+
 # K最短路径算法
 def ksp(dict, nodes, flows, k):
     a = len(nodes)
@@ -102,9 +126,9 @@ def solve_path(all_k_shortest_path, flows, links, k):
         change = []
         for j in range(len(all_k_shortest_path[i])):
             num = []
-            for k in range(len(all_k_shortest_path[i][j]) - 1):
-                nodes1 = int(all_k_shortest_path[i][j][k].replace("s",""))
-                nodes2 = int(all_k_shortest_path[i][j][k + 1].replace("s", ""))
+            for x in range(len(all_k_shortest_path[i][j]) - 1):
+                nodes1 = int(all_k_shortest_path[i][j][x].replace("s",""))
+                nodes2 = int(all_k_shortest_path[i][j][x + 1].replace("s", ""))
                 # print(str(nodes1) + ' ' + str(nodes2))
                 num_flows = links.index((nodes1, nodes2))
                 # print(num_flows)
@@ -114,10 +138,9 @@ def solve_path(all_k_shortest_path, flows, links, k):
         Tf.append(change)
     return Tf
 
-
 # 算法测试
 def test_yen_ksp():
-    a = input('请输入选择的拓扑（B4/IBM）:')
+    a = 'data/' + input('请输入选择的拓扑（B4/IBM）:')
     links, capacity, link_probs, nodes = parsers.readTopology(a)
 
     dict = create_dict(links,nodes)
@@ -127,11 +150,14 @@ def test_yen_ksp():
     demand, flows = parsers.readDemand(a, len(nodes), 1)
     k = int(input('请输入最短路数量：'))
     all_k_shortest_path = ksp(dict, nodes, flows, k)
+    # all_k_shortest_path = solve_path_random(dict, nodes, flows, k)
     for i in all_k_shortest_path:
-        print(i)
+        for j in i:
+            print(j)
     Tf = solve_path(all_k_shortest_path, flows, links, k)
     print(Tf)   # Tf保存路径在links中的索引值
 
-# test_yen_ksp()
+if __name__ == '__main__':
+    test_yen_ksp()
 
 
