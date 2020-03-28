@@ -17,7 +17,6 @@ def FFC_arithmetic(Tf, capacity, demand, flows, links, k, fault): # fault表示�
         scenarois.append(s)
     # for i in scenarois:
     #     print(i)
-
     # print(Tf[0])
 
     # 按流量、方案创建剩余隧道
@@ -117,8 +116,8 @@ def FFC_arithmetic(Tf, capacity, demand, flows, links, k, fault): # fault表示�
     print(bf)
     print(Aft)
 
-    file = 'Arithmetic/' + input('请输入文件名（xxx.lp)')
-    m.write(file)
+    # file = 'Arithmetic/' + input('请输入文件名（xxx.lp)')
+    # m.write(file)
 
     return bf, Aft
 

@@ -76,8 +76,8 @@ def TE_Common(Tf, capacity, demand, flows, links, k):
     print(bf)
     print(Aft)
 
-    file = 'Arithmetic/' + input('请输入文件名（xxx.lp)')
-    m.write(file)
+    # file = 'Arithmetic/' + input('请输入文件名（xxx.lp)')
+    # m.write(file)
 
     return bf, Aft
 

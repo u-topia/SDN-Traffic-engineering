@@ -1,10 +1,10 @@
-# 此文件用于计算网络拓扑中的链路利用率
-
+# 该文档用以计算链路利用率
 from graduation_project import parsers
+from graduation_project import KshortestPaths
 
 def readFile(filename):
     filename = 'data/' + filename
-    file1 = open(filename, 'r', encoding = 'utf-8')
+    file1 = open(filename, 'r', encoding='utf-8')
     data = file1.readlines()
     x = []
     for line in data:
@@ -12,27 +12,27 @@ def readFile(filename):
             continue
         line_data = line.split()
         x.extend(line_data)
-    # print(x)
-    data_flow = []
-    sum = 0
+    data_Aft = []
     flag = 0
     for i in x:
-        if 'bf' in i:
+        if 'Aft' in i:
             flag = 1
         elif flag == 1:
-            data_flow.append(float(i))
-            sum += float(i)
+            flag += 1
+        elif flag == 2:
+            data_Aft.append(float(i))
             flag = 0
-        elif 'Aft' in i:
-            break
-    return sum, data_flow
+    return data_Aft
 
-def compute_utilization(sum, demand):
-    demand_sum = 0
-    for i in demand:
-        demand_sum += i
-    a = sum / demand_sum
-    return a
+def compute_utilization(Ce, Tf, data_Aft):
+    sum_Ce = 0
+    for i in Ce:
+        sum_Ce += i
+    sum = 0
+    for i in range(len(Tf)):
+        sum += len(Tf[i]) * data_Aft[i]
+    utilization = sum / sum_Ce
+    return utilization
 
 
 if __name__ == '__main__':
@@ -45,10 +45,17 @@ if __name__ == '__main__':
         filename = filename +  '-' + num1
     filename = filename +  '.txt'
     print(filename)
-    sum, data_flow = readFile(filename)
+    data_Aft = readFile(filename)
     a = 'data/' + topology
     links, capacity, link_probs, nodes = parsers.readTopology(a)
     demand, flows = parsers.readDemand(a, len(nodes), 1)
-    consequence = compute_utilization(sum, demand)
+    dict = KshortestPaths.create_dict(links, nodes)
+    # 找到前k条最短路径
+    k = int(input('请输入最短路数量：'))
+    all_k_shortest_path = KshortestPaths.ksp(dict, nodes, flows, k)
+    # all_k_shortest_path = KshortestPaths.solve_path_random(dict, nodes, flows, k)
+    # for i in all_k_shortest_path:
+    #     print(i)
+    Tf = KshortestPaths.solve_path(all_k_shortest_path, flows, links, k)
+    consequence = compute_utilization(capacity, Tf, data_Aft)
     print(consequence)
-
